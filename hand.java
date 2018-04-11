@@ -1,9 +1,8 @@
 public class hand {
 	dice[] cupOfDice;
 	int numOfRolls = 0;
-	int numOfDice;
-	int numOfSides;
-	int maxNumOfRolls;
+	int numOfDice = 6;
+	int numOfSides = 6;
 	
 	/*
 	 * creates the hand which contains an array of dice
@@ -14,12 +13,9 @@ public class hand {
 	 *          the number of dice
 	 * @throw no exceptions thrown
 	 */
-	public hand(int numberOfDice, int numberOfSides, int numberOfRolls)
+	public hand()
 	{
-		cupOfDice = new dice[numberOfDice];
-		numOfDice = numberOfDice;
-		numOfSides = numberOfSides;
-		maxNumOfRolls = numberOfRolls;
+		cupOfDice = new dice[6];
 	}
 	
 	/*
@@ -29,10 +25,9 @@ public class hand {
 	 * @returns nothing
 	 * @throw no exceptions thrown
 	 */
-	public void roll(String input)
+	public void roll(Boolean[] input)
 	{
 		dice tempDice  = new dice(numOfSides);
-		char[] inputArray = input.toCharArray();
 
 		if (numOfRolls == 0) // if it is the first roll, the input doesn't matter
 		{
@@ -42,15 +37,12 @@ public class hand {
 				tempDice.roll();
 				cupOfDice[k] = tempDice.clone();
 			}
-		} else if (numOfRolls == maxNumOfRolls) // can't roll three times so this is a fail safe
-		{
-			System.out.println("You are out of rolls");
 		} else { // takes the input array and rolls the dice that correspond with the 'n' values
 			
 			numOfRolls++;
 			for (int k = 0;  k < numOfDice; k++)
 			{
-				if (inputArray[k] == 'n') 
+				if (input[k] == true) 
 				{
 					cupOfDice[k].roll();
 				}
@@ -125,6 +117,12 @@ public class hand {
 
 	}
 	
+	/*
+	 * resets the number of rolls to zero
+	 * @param none
+	 * @returns nothing
+	 * @throws nothing
+	 */
 	public void resetRoll()
 	{
 		numOfRolls = 0;
