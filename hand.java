@@ -25,7 +25,7 @@ public class hand {
 	 * @returns nothing
 	 * @throw no exceptions thrown
 	 */
-	public void roll(Boolean[] input)
+	public void roll()
 	{
 		dice tempDice  = new dice(numOfSides);
 
@@ -42,7 +42,7 @@ public class hand {
 			numOfRolls++;
 			for (int k = 0;  k < numOfDice; k++)
 			{
-				if (input[k] == true) 
+				if (cupOfDice[k].moreRolling()) 
 				{
 					cupOfDice[k].roll();
 				}
