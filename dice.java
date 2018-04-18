@@ -29,7 +29,7 @@ public class dice implements Cloneable {
 	}
 	
 	/*
-	 * creates an object called dice that contains a specified number of sides and a roll value
+	 * creates an object called dice that contains a specified number of sides, a boolean if you should keep rolling, and a roll value
 	 * @param number of sides you want the dice to have
 	 * @returns an object of dice with the specified sides
 	 * @throw nothing
@@ -63,11 +63,23 @@ public class dice implements Cloneable {
 		return rollNumber;
 	}
 	
+	/*
+	 * sets the boolean variable to the specified input
+	 * @param a boolean used to set the boolean member of dice
+	 * @returns nothing
+	 * @throw no exceptions thrown
+	 */
 	public void setRolling(Boolean input)
 	{
 		continueRolling = input;
 	}
 	
+	/*
+	 * returns the value of continueRolling
+	 * @param none
+	 * @returns the value of the boolean member continueRolling
+	 * @throws nothing
+	 */
 	public Boolean moreRolling()
 	{
 		return continueRolling;
