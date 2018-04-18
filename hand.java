@@ -1,21 +1,44 @@
 public class hand {
 	dice[] cupOfDice;
 	int numOfRolls = 0;
-	int numOfDice = 6;
+	int numOfDice;
 	int numOfSides = 6;
 	
 	/*
 	 * creates the hand which contains an array of dice
 	 * also assigns number of dice, sides, and the max number of rolls 
-	 * @param number of dice, number of Sides, and number of rolls
+	 * @param number of dice
 	 * @returns an object containing an array of dice and two integer values
-	 *          one containing the number of rolls allowed and the other containing 
+	 *          one containing the number of sides allowed and the other containing 
 	 *          the number of dice
 	 * @throw no exceptions thrown
 	 */
-	public hand()
+	public hand(int numberOfDice)
 	{
-		cupOfDice = new dice[6];
+		cupOfDice = new dice[numOfDice];
+	}
+	
+	
+	/*
+	 * creates the hand object equal to the given hand
+	 * @param a hand object
+	 * @returns an object containing an array of dice and two integer values
+	 *          one containing the number of sides allowed and the other containing 
+	 *          the number of dice
+	 * @throw no exceptions thrown
+	 */
+	hand(hand c, boolean toReroll) {
+		int count = 0;
+		
+		for (int k = 0; k < c.numOfDice; k++)
+		{
+			while (c.cupOfDice[k].moreRolling() == toReroll)
+			{
+				cupOfDice[count] = c.cupOfDice[k];
+				count++;
+			}
+		}
+		numOfDice = count;
 	}
 	
 	/*
