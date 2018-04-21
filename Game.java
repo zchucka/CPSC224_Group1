@@ -2,20 +2,66 @@ import java.util.Scanner;
 import java.io.*;
 
 public class Game {
-    public int numPlayers;
+    public static int numPlayers;
     public int maxScore;
     public int numTurns;
+    public player playerArray[];
+    public static Scanner in = new Scanner(System.in);
 
     /**
      * Game Constructor
      * creates a game object
      */
-    public Game() {
+    public Game() 
+    {
         getConfiguration();
+        playerArray = new player[numPlayers];
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args)
+    {
         Game farkleGame = new Game();
+
+        boolean isGameComplete = false;
+
+        while(!isGameComplete)
+        {
+            boolean isFarkle = false;
+            boolean isTurnOver = false;
+
+            for (int i = 0; i < numPlayers; i++)
+            {
+                hand myHand = new hand(6);
+
+                while(!isFarkle && !isTurnOver)
+                {
+                    String toScore;
+                    
+                    myHand.roll();
+                    myHand.displayRoll();
+                    isFarkle = scorer.checkValidity(myHand);
+
+                    if(!isFarkle)
+                    {
+                        System.out.println("Please select the dice you would like to score");
+                        toScore = in.nextLine();
+
+                        for (int k = 0; k < 6; k++)
+                        {
+                            if(toScore.charAt(k) == 'y')
+                            {
+                                myHand.setRolling(k);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("You farkled you dumb mf");
+                    }
+
+                }
+            }
+        }
 
     }
 
