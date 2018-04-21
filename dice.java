@@ -69,9 +69,9 @@ public class dice implements Cloneable {
 	 * @returns nothing
 	 * @throw no exceptions thrown
 	 */
-	public void setRolling(Boolean input)
+	public void setRolling()
 	{
-		continueRolling = input;
+		continueRolling = !continueRolling;
 	}
 	
 	/*
