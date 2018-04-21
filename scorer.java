@@ -344,9 +344,9 @@ public class scorer {
 	 */
 	private int[] setFrequencyArray()
 	{
-		int[] frequencyArray = new int[playerHand.numOfDice];
+		int[] frequencyArray = new int[playerHand.numOfSides];
 		
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < playerHand.numOfDice; i++)
 		{
 			int value = playerHand.displayTheDiceValue(i);
 			frequencyArray[value - 1]++;
