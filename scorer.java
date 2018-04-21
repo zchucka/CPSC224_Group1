@@ -39,11 +39,11 @@ public class scorer {
 	 */
 	public void calculateScore()
 	{
-		int[] frequencyArray = new int[playerHand.numOfSides];
+		int[] frequencyArray = setFrequencyArray();
 		
 		if(checkValidity(playerHand))
 		{
-			frequencyArray = setFrequencyArray();
+
 			if (playerHand.numOfDice >= 6)
 			{
 				scoreSixDice(frequencyArray);
@@ -257,8 +257,7 @@ public class scorer {
 	 */
 	public boolean checkValidity(hand hand)
     {
-		int[] frequencyArray = new int[hand.numOfSides];
-		frequencyArray = setFrequencyArray();
+		int[] frequencyArray = setFrequencyArray();
 		
         if(checkForFivesOrOnes(frequencyArray))
         {
