@@ -15,6 +15,7 @@ public class hand {
 	 */
 	public hand(int numberOfDice)
 	{
+		numOfDice = numberOfDice;
 		cupOfDice = new dice[numOfDice];
 	}
 	
@@ -38,6 +39,7 @@ public class hand {
 				count++;
 			}
 		}
+
 		numOfDice = count;
 	}
 	
@@ -84,7 +86,10 @@ public class hand {
 		// loops over the dice in the array to print them
 		for (int k = 0; k < numOfDice; k++)
 		{
-			System.out.print(cupOfDice[k].diceValue() + " ");
+			if (cupOfDice[k].moreRolling())
+			{
+				System.out.print(cupOfDice[k].diceValue() + " ");
+			}
 		}
 		System.out.println();
 	}
@@ -149,5 +154,17 @@ public class hand {
 	public void resetRoll()
 	{
 		numOfRolls = 0;
+	}
+
+	/*
+	 * inverts the boolean value of a die
+	 * at a given index
+	 * @param a boolean used to set the boolean member of dice
+	 * @returns nothing
+	 * @throw no exceptions thrown
+	 */
+	public void setRolling(int index)
+	{
+		cupOfDice[index].continueRolling = !(cupOfDice[index].continueRolling);
 	}
 }
