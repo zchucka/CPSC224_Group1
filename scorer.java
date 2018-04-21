@@ -221,7 +221,7 @@ public class scorer {
 				{
 					roundScore += frequencyArray[k] * 300;
 				} else {
-					roundScore += frequencyArray[k] * k * 100;
+					roundScore += frequencyArray[k] * (k + 1) * 100;
 				}
 				frequencyArray[k] = frequencyArray[k] - 3;
 			}
