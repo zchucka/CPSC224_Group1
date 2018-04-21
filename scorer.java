@@ -316,7 +316,7 @@ public class scorer {
     }
 	
 	/*
-	 * a helper function for check if valid that returns true if there are three paris in the hand
+	 * a helper function for check if valid that returns true if there are three pairs in the hand
 	 * @param an integer array that describes the frequency of the sides of the hand
 	 * @returns true if there are three pairs and false if there isnt
 	 * @throws nothing
