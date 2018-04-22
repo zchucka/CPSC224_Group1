@@ -1,6 +1,7 @@
 public class scorer {
     private int roundScore = 0;
     static hand playerHand;
+    private static int[] frequencyArray = new int[6];
 
     /*
      * creates an object that contains a hand object of dice that need to be score and a round score
@@ -19,6 +20,8 @@ public class scorer {
         {
             playerHand.cupOfDice[k] = player.cupOfDice[k];
         }
+
+        setFrequencyArray();
     }
 
     /*
@@ -41,35 +44,32 @@ public class scorer {
 	 */
     public void calculateScore()
     {
-        int[] frequencyArray = new int[6];
-
         if(checkValidity(playerHand))
         {
-            frequencyArray = setFrequencyArray();
             if (playerHand.numOfDice >= 6)
             {
-                scoreSixDice(frequencyArray);
+                scoreSixDice();
             }
 
             if (playerHand.numOfDice >= 5)
             {
-                scoreFiveDice(frequencyArray);
+                scoreFiveDice();
             }
 
             if (playerHand.numOfDice >= 4)
             {
-                scoreFourDice(frequencyArray);
+                scoreFourDice();
             }
 
             if (playerHand.numOfDice >= 3)
             {
-                scoreThreeDice(frequencyArray);
+                scoreThreeDice();
             }
 
             // check for 1's and 5's
             if (playerHand.numOfDice >= 0)
             {
-                scoreOneDice(frequencyArray);
+                scoreOneDice();
             }
         }
     }
@@ -80,7 +80,7 @@ public class scorer {
 	 * @returns nothing
 	 * @throws nothing
 	 */
-    private void scoreSixDice(int frequencyArray[])
+    private void scoreSixDice()
     {
         Boolean isStraight = true;
         Boolean hasFourOfAKind = false;
@@ -174,7 +174,7 @@ public class scorer {
 	 * @returns nothing
 	 * @throws nothing
 	 */
-    private void scoreFiveDice(int frequencyArray[])
+    private void scoreFiveDice()
     {
         // check for five of a kind
         for (int k = 0; k < 6; k++)
@@ -193,7 +193,7 @@ public class scorer {
 	 * @returns nothing
 	 * @throws nothing
 	 */
-    private void scoreFourDice(int frequencyArray[])
+    private void scoreFourDice()
     {
         // check for four of a kind
         for (int k = 0; k < 6; k++)
@@ -212,7 +212,7 @@ public class scorer {
 	 * @returns nothing
 	 * @throws nothing
 	 */
-    private void scoreThreeDice(int frequencyArray[])
+    private void scoreThreeDice()
     {
         // check for three of a kind
         for (int k = 0; k < 6; k++)
@@ -236,7 +236,7 @@ public class scorer {
 	 * @returns nothing
 	 * @throws nothing
 	 */
-    private void scoreOneDice(int frequencyArray[])
+    private void scoreOneDice()
     {
         if(frequencyArray[0] >= 1) // if there are ones
         {
@@ -259,25 +259,15 @@ public class scorer {
 	 */
     public static boolean checkValidity(hand hand)
     {
-        playerHand = new hand(hand.numOfDice);
-
-        for(int k = 0; k < playerHand.numOfDice; k++)
-        {
-            playerHand.cupOfDice[k] = hand.cupOfDice[k];
-        }
-
-        int[] frequencyArray = setFrequencyArray();
-
-
-        if(checkForFivesOrOnes(frequencyArray))
+        if(checkForFivesOrOnes())
         {
             return true;
         }
-        else if(checkForThreeOfAKind(frequencyArray))
+        else if(checkForThreeOfAKind())
         {
             return true;
         }
-        else if(checkForThreePairs(frequencyArray))
+        else if(checkForThreePairs())
         {
             return true;
         }
@@ -293,7 +283,7 @@ public class scorer {
 	 * @returns true if there are ones or fives and false if there isnt
 	 * @throws nothing
 	 */
-    private static boolean checkForFivesOrOnes(int[] frequencyArray)
+    private static boolean checkForFivesOrOnes()
     {
         if(frequencyArray[0] > 0 || frequencyArray[4] > 0)
         {
@@ -311,7 +301,7 @@ public class scorer {
 	 * @returns true if there is a three of a kind and false if there isnt
 	 * @throws nothing
 	 */
-    private static boolean checkForThreeOfAKind(int[] frequencyArray)
+    private static boolean checkForThreeOfAKind()
     {
         for (int i = 0; i < 6; i++)
         {
@@ -330,7 +320,7 @@ public class scorer {
 	 * @returns true if there are three pairs and false if there isnt
 	 * @throws nothing
 	 */
-    private static boolean checkForThreePairs(int[] frequencyArray)
+    private static boolean checkForThreePairs()
     {
         int pairs = 0;
 
@@ -351,14 +341,12 @@ public class scorer {
 	 * @returns an integer array that describes the frequency of the sides of the hand
 	 * @throws nothing
 	 */
-    private static int[] setFrequencyArray()
+    private static void setFrequencyArray()
     {
-        int[] frequencyArray = new int[6];
         for (int i = 0; i < playerHand.numOfDice; i++)
         {
             int value = playerHand.displayTheDiceValue(i);
             frequencyArray[value - 1]++;
         }
-        return frequencyArray;
     }
 }
