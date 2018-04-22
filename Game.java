@@ -26,37 +26,44 @@ public class Game {
 
         while(!isGameComplete)
         {
-            boolean isFarkle = false;
+            boolean isValidHand = true;
             boolean isTurnOver = false;
 
             for (int i = 0; i < numPlayers; i++)
             {
                 hand myHand = new hand(6);
 
-                while(!isFarkle && !isTurnOver)
+                while(isValidHand && !isTurnOver)
                 {
                     String toScore;
                     
                     myHand.roll();
                     myHand.displayRoll();
-                    isFarkle = scorer.checkValidity(myHand);
+                    scorer validityChecker = new scorer(myHand);
+                    isValidHand = validityChecker.checkValidity();
 
-                    if(!isFarkle)
+                    if(isValidHand)
                     {
                         System.out.println("Please select the dice you would like to score");
                         toScore = in.nextLine();
 
-                        for (int k = 0; k < 6; k++)
+                        int dieScored = 0;
+                        for (int k = 0; k < hand.numOfDice; k++)
                         {
                             if(toScore.charAt(k) == 'y')
                             {
                                 myHand.setRolling(k);
+                                dieScored++;
                             }
                         }
+                        myHand = new hand(hand.numOfDice - dieScored);
+                        scorer addScore = new scorer(myHand);
+                        addScore.calculateScore();
                     }
                     else
                     {
-                        System.out.println("You farkled you dumb mf");
+                        System.out.println("Farkle!");
+                        isValidHand = !isValidHand;
                     }
 
                 }

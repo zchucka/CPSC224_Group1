@@ -1,7 +1,7 @@
 public class hand {
 	dice[] cupOfDice;
 	int numOfRolls = 0;
-	int numOfDice;
+	static int numOfDice;
 	int numOfSides = 6;
 	
 	/*
@@ -33,9 +33,9 @@ public class hand {
 		
 		for (int k = 0; k < c.numOfDice; k++)
 		{
-			while (c.cupOfDice[k].moreRolling() == toReroll)
+			if (c.cupOfDice[k].moreRolling() == toReroll)
 			{
-				cupOfDice[count] = c.cupOfDice[k];
+				cupOfDice[count] = c.cupOfDice[k].clone();
 				count++;
 			}
 		}

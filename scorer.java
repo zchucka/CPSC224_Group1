@@ -12,13 +12,13 @@ public class scorer {
      */
     public scorer(hand player)
     {
-        playerHand = new hand(player.numOfDice);
+        playerHand = new hand(player, true);
 
         System.out.println("number of dice is " + playerHand.numOfDice);
 
         for(int k = 0; k < playerHand.numOfDice; k++)
         {
-            playerHand.cupOfDice[k] = player.cupOfDice[k];
+            playerHand.cupOfDice[k] = player.cupOfDice[k].clone();
         }
 
         setFrequencyArray();
@@ -44,7 +44,7 @@ public class scorer {
 	 */
     public void calculateScore()
     {
-        if(checkValidity(playerHand))
+        if(checkValidity())
         {
             if (playerHand.numOfDice >= 6)
             {
@@ -257,7 +257,7 @@ public class scorer {
 	 * @returns a boolean variable based on if the hand can be scored in a valid manner
 	 * @throws nothing
 	 */
-    public static boolean checkValidity(hand hand)
+    public static boolean checkValidity()
     {
         if(checkForFivesOrOnes())
         {
