@@ -33,7 +33,12 @@ public class scorer {
         return roundScore;
     }
 
-    // calculates the score from hand
+    /*
+	 * calculates the score of a given hand and inserts it into the data member round score
+	 * @param none
+	 * @returns nothing
+	 * @throws nothing
+	 */
     public void calculateScore()
     {
         int[] frequencyArray = new int[6];
@@ -69,7 +74,12 @@ public class scorer {
         }
     }
 
-    //scores the dice for any different type of six scoring dice
+    /*
+	 * a helper function for calculate score that scores the dice for any different type of six scoring dice
+	 * @param an integer array that describes the frequency of the sides of the hand
+	 * @returns nothing
+	 * @throws nothing
+	 */
     private void scoreSixDice(int frequencyArray[])
     {
         Boolean isStraight = true;
@@ -158,6 +168,12 @@ public class scorer {
         }
     }
 
+    /*
+	 * a helper function for calculate score that checks for a five of a kind and adds it to score
+	 * @param an integer array that describes the frequency of the sides of the hand
+	 * @returns nothing
+	 * @throws nothing
+	 */
     private void scoreFiveDice(int frequencyArray[])
     {
         // check for five of a kind
@@ -171,6 +187,12 @@ public class scorer {
         }
     }
 
+    /*
+	 * a helper function for calculate score that checks for a four of a kind and adds it to score
+	 * @param an integer array that describes the frequency of the sides of the hand
+	 * @returns nothing
+	 * @throws nothing
+	 */
     private void scoreFourDice(int frequencyArray[])
     {
         // check for four of a kind
@@ -184,6 +206,12 @@ public class scorer {
         }
     }
 
+    /*
+	 * a helper function for calculate score that checks for a three of a kind and adds it to score
+	 * @param an integer array that describes the frequency of the sides of the hand
+	 * @returns nothing
+	 * @throws nothing
+	 */
     private void scoreThreeDice(int frequencyArray[])
     {
         // check for three of a kind
@@ -202,6 +230,12 @@ public class scorer {
         }
     }
 
+    /*
+	 * a helper function for calculate score that checks for any remaining ones and fives and adds it to score
+	 * @param an integer array that describes the frequency of the sides of the hand
+	 * @returns nothing
+	 * @throws nothing
+	 */
     private void scoreOneDice(int frequencyArray[])
     {
         if(frequencyArray[0] >= 1) // if there are ones
@@ -217,6 +251,12 @@ public class scorer {
         }
     }
 
+    /*
+	 * a function that checks if the hand given can be a valid score
+	 * @param a hand that is being scored
+	 * @returns a boolean variable based on if the hand can be scored in a valid manner
+	 * @throws nothing
+	 */
     public static boolean checkValidity(hand hand)
     {
         playerHand = new hand(hand.numOfDice);
@@ -247,6 +287,12 @@ public class scorer {
         }
     }
 
+    /*
+	 * a helper function for check if valid that returns true if there are ones and fives in the hand
+	 * @param an integer array that describes the frequency of the sides of the hand
+	 * @returns true if there are ones or fives and false if there isnt
+	 * @throws nothing
+	 */
     private static boolean checkForFivesOrOnes(int[] frequencyArray)
     {
         if(frequencyArray[0] > 0 || frequencyArray[4] > 0)
@@ -259,6 +305,12 @@ public class scorer {
         }
     }
 
+    /*
+	 * a helper function for check if valid that returns true if there is a three of a kind in the hand
+	 * @param an integer array that describes the frequency of the sides of the hand
+	 * @returns true if there is a three of a kind and false if there isnt
+	 * @throws nothing
+	 */
     private static boolean checkForThreeOfAKind(int[] frequencyArray)
     {
         for (int i = 0; i < 6; i++)
@@ -272,6 +324,12 @@ public class scorer {
         return false;
     }
 
+    /*
+	 * a helper function for check if valid that returns true if there are three pairs in the hand
+	 * @param an integer array that describes the frequency of the sides of the hand
+	 * @returns true if there are three pairs and false if there isnt
+	 * @throws nothing
+	 */
     private static boolean checkForThreePairs(int[] frequencyArray)
     {
         int pairs = 0;
@@ -287,6 +345,12 @@ public class scorer {
         return (pairs == 3);
     }
 
+    /*
+	 * a function that creates a frequency array out of the data member hand
+	 * @param noothing
+	 * @returns an integer array that describes the frequency of the sides of the hand
+	 * @throws nothing
+	 */
     private static int[] setFrequencyArray()
     {
         int[] frequencyArray = new int[6];
