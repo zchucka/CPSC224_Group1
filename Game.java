@@ -14,7 +14,11 @@ public class Game {
      */
     public Game() 
     {
-        getConfiguration();
+        //getConfiguration();
+
+        numPlayers = 4;
+        maxScore = 10000;
+        numTurns = 10;
         playerArray = new player[numPlayers];
     }
 
@@ -26,16 +30,20 @@ public class Game {
 
         while(!isGameComplete)
         {
-            boolean isValidHand = true;
-            boolean isTurnOver = false;
-
             for (int i = 0; i < numPlayers; i++)
             {
+                System.out.println("Player " + (i + 1) + "'s turn!");
+
+                boolean isValidHand = true;
+                boolean isTurnOver = false;
+                int turnScore = 0;
                 hand myHand = new hand(6);
 
                 while(isValidHand && !isTurnOver)
                 {
                     String toScore;
+
+                    System.out.println("Your turn score is: " + turnScore);
                     
                     myHand.roll();
                     myHand.displayRoll();
@@ -47,23 +55,31 @@ public class Game {
                         System.out.println("Please select the dice you would like to score");
                         toScore = in.nextLine();
 
-                        int dieScored = 0;
-                        for (int k = 0; k < hand.numOfDice; k++)
+                        for (int k = 0; k < myHand.numOfDice; k++)
                         {
-                            if(toScore.charAt(k) == 'y')
+                            if(toScore.charAt(k) == 'n')
                             {
-                                myHand.setRolling(k);
-                                dieScored++;
+                                myHand.setRolling(k, true);
                             }
                         }
-                        myHand = new hand(hand.numOfDice - dieScored);
+                        
                         scorer addScore = new scorer(myHand);
-                        addScore.calculateScore();
+                        turnScore = turnScore + addScore.Score();
+
+                        if (myHand.numOfDice == 0)
+                        {
+                            myHand = new hand(6);
+                        }
+                        else
+                        {
+                            System.out.println("num of dice is: " + myHand.numOfDice);
+                            myHand = new hand(myHand.numOfDice); 
+                        }
                     }
                     else
                     {
                         System.out.println("Farkle!");
-                        isValidHand = !isValidHand;
+                        isValidHand = false;
                     }
 
                 }

@@ -1,7 +1,7 @@
 public class hand {
 	dice[] cupOfDice;
 	int numOfRolls = 0;
-	static int numOfDice;
+	int numOfDice;
 	int numOfSides = 6;
 	
 	/*
@@ -21,16 +21,18 @@ public class hand {
 	
 	
 	/*
-	 * creates the hand object equal to the given hand
+	 * creates the hand object of the given roll values from hand
 	 * @param a hand object
 	 * @returns an object containing an array of dice and two integer values
 	 *          one containing the number of sides allowed and the other containing 
 	 *          the number of dice
 	 * @throw no exceptions thrown
 	 */
-	hand(hand c, boolean toReroll) {
+	public hand(boolean toReroll, hand c) {
 		int count = 0;
-		
+		System.out.println("how many dice are in c before copy " + c.numOfDice);
+		cupOfDice = new dice[c.numOfDice];
+
 		for (int k = 0; k < c.numOfDice; k++)
 		{
 			if (c.cupOfDice[k].moreRolling() == toReroll)
@@ -41,6 +43,7 @@ public class hand {
 		}
 
 		numOfDice = count;
+		System.out.println("after the copy " + c.numOfDice);
 	}
 	
 	/*
@@ -83,15 +86,24 @@ public class hand {
 	 */
 	public void displayRoll()
 	{
-		// loops over the dice in the array to print them
-		for (int k = 0; k < numOfDice; k++)
+		if (numOfRolls == 1)
 		{
-			if (cupOfDice[k].moreRolling())
+			for(int k = 0; k < numOfDice; k++)
 			{
 				System.out.print(cupOfDice[k].diceValue() + " ");
 			}
+			System.out.println();
+		} else {
+			// loops over the dice in the array to print them
+			for (int k = 0; k < numOfDice; k++)
+			{
+				if (cupOfDice[k].moreRolling())
+				{
+					System.out.print(cupOfDice[k].diceValue() + " ");
+				}
+			}
+			System.out.println();
 		}
-		System.out.println();
 	}
 	
 	/*
@@ -163,8 +175,8 @@ public class hand {
 	 * @returns nothing
 	 * @throw no exceptions thrown
 	 */
-	public void setRolling(int index)
+	public void setRolling(int index, boolean tOrF)
 	{
-		cupOfDice[index].continueRolling = !(cupOfDice[index].continueRolling);
+		cupOfDice[index].setRolling(tOrF);
 	}
 }

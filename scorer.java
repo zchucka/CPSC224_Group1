@@ -12,14 +12,12 @@ public class scorer {
      */
     public scorer(hand player)
     {
-        playerHand = new hand(player, true);
+        playerHand = new hand(false,player);
 
-        System.out.println("number of dice is " + playerHand.numOfDice);
-
-        for(int k = 0; k < playerHand.numOfDice; k++)
+        /*for(int k = 0; k < playerHand.numOfDice; k++)
         {
             playerHand.cupOfDice[k] = player.cupOfDice[k].clone();
-        }
+        }*/
 
         setFrequencyArray();
     }
@@ -33,6 +31,7 @@ public class scorer {
     public int Score()
     {
         calculateScore();
+        System.out.println("Calculating score");
         return roundScore;
     }
 
@@ -71,6 +70,8 @@ public class scorer {
             {
                 scoreOneDice();
             }
+
+            System.out.println("your round score is: " + roundScore);
         }
     }
 
@@ -303,11 +304,14 @@ public class scorer {
 	 */
     private static boolean checkForThreeOfAKind()
     {
-        for (int i = 0; i < 6; i++)
+        if (playerHand.numOfDice >= 3)
         {
-            if (frequencyArray[i] >= 3)
+            for (int i = 0; i < 6; i++)
             {
-                return true;
+                if (frequencyArray[i] >= 3)
+                {
+                    return true;
+                }
             }
         }
 
@@ -324,11 +328,14 @@ public class scorer {
     {
         int pairs = 0;
 
-        for (int i = 0; i < 6; i++)
+        if (playerHand.numOfDice == 6)
         {
-            if (frequencyArray[i] == 2)
+            for (int i = 0; i < 6; i++)
             {
-                pairs++;
+                if (frequencyArray[i] == 2)
+                {
+                    pairs++;
+                }
             }
         }
 
@@ -343,10 +350,23 @@ public class scorer {
 	 */
     private static void setFrequencyArray()
     {
+        for(int i = 0; i < 6; i++)
+        {
+            frequencyArray[i] = 0;
+        }
+
         for (int i = 0; i < playerHand.numOfDice; i++)
         {
             int value = playerHand.displayTheDiceValue(i);
             frequencyArray[value - 1]++;
+        }
+    }
+
+    public void printFreq()
+    {
+        for(int i = 0; i < 6; i++)
+        {
+            System.out.println((i + 1) + ": " + frequencyArray[i]);
         }
     }
 }

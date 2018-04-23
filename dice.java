@@ -9,7 +9,7 @@ public class dice implements Cloneable {
 	 */
 	int rollNumber = -1;
 	int numOfSides;
-	Boolean continueRolling = true;
+	Boolean continueRolling = false;
 	
 	/*
 	 * creates a deep copy of the dice
@@ -69,9 +69,10 @@ public class dice implements Cloneable {
 	 * @returns nothing
 	 * @throw no exceptions thrown
 	 */
-	public void setRolling()
+	public void setRolling(boolean tOrF)
 	{
-		continueRolling = !continueRolling;
+		//continueRolling = !continueRolling;
+		continueRolling = tOrF;
 	}
 	
 	/*
