@@ -54,4 +54,12 @@ public class player
     {
         return playerName;
     }
+    
+    /*
+     * returns the players score
+     */
+    public int getScore()
+    {
+    	return points;
+    }
 }

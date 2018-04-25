@@ -4,7 +4,7 @@ import java.io.*;
 public class Game {
     public static int numPlayers;
     public int maxScore;
-    public int numTurns;
+    public int maxNumTurns;
     public static player playerArray[] = new player[4];
     public static Scanner in = new Scanner(System.in);
 
@@ -18,20 +18,21 @@ public class Game {
 
         numPlayers = 4;
         maxScore = 10000;
-        numTurns = 10;
+        maxNumTurns = 10;
         //playerArray = new player[numPlayers];
     }
 
     public static void main(String[] args)
     {
         Game farkleGame = new Game();
-
+        int turnNum = 0;
         boolean isGameComplete = false;
 
         // loop for the overall game
         // will run until game is complete
         while(!isGameComplete)
         {
+        	turnNum++;
             // for loop to ensure each player
             // has a turn to roll
             for (int i = 0; i < numPlayers; i++)
@@ -108,6 +109,8 @@ public class Game {
                     
                 }
             }
+            
+            isGameComplete = checkEndConditions();
         }
 
     }
@@ -147,9 +150,9 @@ public class Game {
     public int setNumTurns(){
         Scanner console = new Scanner(System.in);
         System.out.println("Please enter the max number of turns you will allow for each player: ");
-        numTurns = console.nextInt();
+        maxNumTurns = console.nextInt();
 
-        return numTurns;
+        return maxNumTurns;
     }
 
 
@@ -165,5 +168,25 @@ public class Game {
         setNumPlayers();
         setNumTurns();
     }
-
+    
+    /*
+     * 
+     */
+    public boolean checkGameConditions()
+    {
+        int highestScore;
+        for (int k = 0; k < numPlayers; k++)
+        {
+        	if (highestScore < playerArray[k].getScore())
+        	{
+        		highestScore = playerArray[k].getScore();
+        	}
+        }
+        if (maxNumTurns <= turnNum || highestScore >= maxScore)
+        {
+        	return true;
+        } else {
+        	return false;
+        }
+    }
 }
