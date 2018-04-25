@@ -5,7 +5,7 @@ public class scorer {
 
     /*
      * creates an object that contains a hand object of dice that need to be score and a round score
-     * this object is used in place of a scorecard to calculate the round scores
+     * this object is used in place of a score card to calculate the round scores
      * @param a hand object
      * @returns an object of class scorer
      * @throws nothing
@@ -70,8 +70,24 @@ public class scorer {
             {
                 scoreOneDice();
             }
-
-            System.out.println("your round score is: " + roundScore);
+            
+            for (int k = 0; k < 6; k++)
+            {
+            	if (frequencyArray[k] > 0)
+            	{
+            		// not a valid selection
+            		System.out.println("That is not a valid selection TOO MANY DICE");
+            		roundScore = -1;
+            	}
+            }
+            
+            if (roundScore >= 0)
+            {
+            	System.out.println("your round score is: " + roundScore);
+            }
+        } else {
+        	System.out.println("That is not a valid selection NOT ENOUGH DICE");
+        	roundScore = -1;
         }
     }
 

@@ -30,7 +30,6 @@ public class hand {
 	 */
 	public hand(boolean toReroll, hand c) {
 		int count = 0;
-		System.out.println("how many dice are in c before copy " + c.numOfDice);
 		cupOfDice = new dice[c.numOfDice];
 
 		for (int k = 0; k < c.numOfDice; k++)
@@ -43,7 +42,6 @@ public class hand {
 		}
 
 		numOfDice = count;
-		System.out.println("after the copy " + c.numOfDice);
 	}
 	
 	/*

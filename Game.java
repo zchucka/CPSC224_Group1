@@ -5,7 +5,7 @@ public class Game {
     public static int numPlayers;
     public int maxScore;
     public int numTurns;
-    public player playerArray[];
+    public static player playerArray[] = new player[4];
     public static Scanner in = new Scanner(System.in);
 
     /**
@@ -19,7 +19,7 @@ public class Game {
         numPlayers = 4;
         maxScore = 10000;
         numTurns = 10;
-        playerArray = new player[numPlayers];
+        //playerArray = new player[numPlayers];
     }
 
     public static void main(String[] args)
@@ -40,6 +40,7 @@ public class Game {
 
                 boolean isValidHand = true;
                 boolean isTurnOver = false;
+                
                 int turnScore = 0;
                 hand myHand = new hand(6);
 
@@ -47,46 +48,64 @@ public class Game {
                 while(isValidHand && !isTurnOver)
                 {
                     String toScore;
-
                     System.out.println("Your turn score is: " + turnScore);
                     
                     myHand.roll();
                     myHand.displayRoll();
                     scorer validityChecker = new scorer(myHand);
                     isValidHand = validityChecker.checkValidity();
+                    scorer addScore = new scorer(myHand);
 
                     if(isValidHand)
                     {
-                        System.out.println("Please select the dice you would like to score");
-                        toScore = in.nextLine();
-
-                        for (int k = 0; k < myHand.numOfDice; k++)
-                        {
-                            if(toScore.charAt(k) == 'n')
-                            {
-                                myHand.setRolling(k, true);
-                            }
-                        }
-                        
-                        scorer addScore = new scorer(myHand);
-                        turnScore = turnScore + addScore.Score();
-
-                        if ((myHand.numOfDice - addScore.playerHand.numOfDice) == 0)
-                        {
-                            myHand = new hand(6);
-                        }
-                        else
-                        {
-                            System.out.println("num of dice is: " + (myHand.numOfDice - addScore.playerHand.numOfDice));
-                            myHand = new hand(myHand.numOfDice - addScore.playerHand.numOfDice); 
-                        }
+                    	boolean isValidSelection = false;  
+                    	while (!isValidSelection)
+                   		{
+                   			int rollScore;
+                   			System.out.println("Please select the dice you would like to score");
+                   			toScore = in.nextLine();
+                       	
+                   			for (int k = 0; k < myHand.numOfDice; k++)
+                   			{
+                   				if(toScore.charAt(k) == 'n')
+                   				{
+                   					myHand.setRolling(k, true);
+                   				}
+                   			}
+                       	
+                   			addScore = new scorer(myHand);
+                   			rollScore = addScore.Score();
+                       	
+                   			if (rollScore >= 0)
+                    		{
+                    			isValidSelection = true;
+                    			turnScore = turnScore + rollScore;
+                   			}
+                   		}
+                    
+                    	System.out.println("Would you like to end your turn? (y/n)");
+                    	String endTurn = in.nextLine();
+                    	
+                    	if (endTurn.charAt(0) == 'y')
+                    	{
+                    		playerArray[i].addPoints(turnScore);
+                    		isTurnOver = true;
+                    	}
+                    	else if ((myHand.numOfDice - addScore.playerHand.numOfDice) == 0)
+                   		{
+                   			myHand = new hand(6);
+                   		}
+                   		else
+                   		{
+                   			myHand = new hand(myHand.numOfDice - addScore.playerHand.numOfDice); 
+                   		}
                     }
-                    else
-                    {
-                        System.out.println("Farkle!");
+                   	else
+                   	{
+                   		System.out.println("Farkle!");
                         isValidHand = false;
                     }
-
+                    
                 }
             }
         }
