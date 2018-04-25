@@ -2,9 +2,9 @@ import java.util.Scanner;
 import java.io.*;
 
 public class Game {
-    public static int numPlayers;
-    public int maxScore;
-    public int maxNumTurns;
+    public static int numPlayers = 0;
+    public static int maxScore = 0;
+    public static int maxNumTurns = 0;
     public static player playerArray[] = new player[4];
     public static Scanner in = new Scanner(System.in);
 
@@ -14,12 +14,16 @@ public class Game {
      */
     public Game() 
     {
-        //getConfiguration();
+        getConfiguration();
 
-        numPlayers = 4;
+        /*numPlayers = 4;
         maxScore = 10000;
         maxNumTurns = 10;
-        //playerArray = new player[numPlayers];
+        playerArray = new player[numPlayers];
+        for(int i = 0; i < numPlayers; i++)
+        {
+            playerArray[i] = new player();
+        }*/
     }
 
     public static void main(String[] args)
@@ -110,9 +114,9 @@ public class Game {
                 }
             }
             
-            isGameComplete = checkEndConditions();
+            isGameComplete = checkEndConditions(turnNum);
         }
-
+        System.out.println("");
     }
 
     /**
@@ -167,14 +171,18 @@ public class Game {
         setMaxScore();
         setNumPlayers();
         setNumTurns();
+        for(int i = 0; i < numPlayers; i++)
+        {
+            playerArray[i] = new player();
+        }
     }
     
     /*
      * 
      */
-    public boolean checkGameConditions()
+    public static boolean checkEndConditions(int turnNum)
     {
-        int highestScore;
+        int highestScore = 0;
         for (int k = 0; k < numPlayers; k++)
         {
         	if (highestScore < playerArray[k].getScore())
