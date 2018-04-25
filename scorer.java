@@ -1,7 +1,7 @@
 public class scorer {
     private int roundScore = 0;
-    static hand playerHand;
-    private static int[] frequencyArray = new int[6];
+    hand playerHand;
+    private int[] frequencyArray = new int[6];
 
     /*
      * creates an object that contains a hand object of dice that need to be score and a round score
@@ -258,7 +258,7 @@ public class scorer {
 	 * @returns a boolean variable based on if the hand can be scored in a valid manner
 	 * @throws nothing
 	 */
-    public static boolean checkValidity()
+    public boolean checkValidity()
     {
         if(checkForFivesOrOnes())
         {
@@ -284,7 +284,7 @@ public class scorer {
 	 * @returns true if there are ones or fives and false if there isnt
 	 * @throws nothing
 	 */
-    private static boolean checkForFivesOrOnes()
+    private boolean checkForFivesOrOnes()
     {
         if(frequencyArray[0] > 0 || frequencyArray[4] > 0)
         {
@@ -302,7 +302,7 @@ public class scorer {
 	 * @returns true if there is a three of a kind and false if there isnt
 	 * @throws nothing
 	 */
-    private static boolean checkForThreeOfAKind()
+    private  boolean checkForThreeOfAKind()
     {
         if (playerHand.numOfDice >= 3)
         {
@@ -324,7 +324,7 @@ public class scorer {
 	 * @returns true if there are three pairs and false if there isnt
 	 * @throws nothing
 	 */
-    private static boolean checkForThreePairs()
+    private  boolean checkForThreePairs()
     {
         int pairs = 0;
 
@@ -348,7 +348,7 @@ public class scorer {
 	 * @returns an integer array that describes the frequency of the sides of the hand
 	 * @throws nothing
 	 */
-    private static void setFrequencyArray()
+    private  void setFrequencyArray()
     {
         for(int i = 0; i < 6; i++)
         {

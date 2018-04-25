@@ -28,8 +28,12 @@ public class Game {
 
         boolean isGameComplete = false;
 
+        // loop for the overall game
+        // will run until game is complete
         while(!isGameComplete)
         {
+            // for loop to ensure each player
+            // has a turn to roll
             for (int i = 0; i < numPlayers; i++)
             {
                 System.out.println("Player " + (i + 1) + "'s turn!");
@@ -39,6 +43,7 @@ public class Game {
                 int turnScore = 0;
                 hand myHand = new hand(6);
 
+                // inner loop to run one turn
                 while(isValidHand && !isTurnOver)
                 {
                     String toScore;
@@ -66,14 +71,14 @@ public class Game {
                         scorer addScore = new scorer(myHand);
                         turnScore = turnScore + addScore.Score();
 
-                        if (myHand.numOfDice == 0)
+                        if ((myHand.numOfDice - addScore.playerHand.numOfDice) == 0)
                         {
                             myHand = new hand(6);
                         }
                         else
                         {
-                            System.out.println("num of dice is: " + myHand.numOfDice);
-                            myHand = new hand(myHand.numOfDice); 
+                            System.out.println("num of dice is: " + (myHand.numOfDice - addScore.playerHand.numOfDice));
+                            myHand = new hand(myHand.numOfDice - addScore.playerHand.numOfDice); 
                         }
                     }
                     else
