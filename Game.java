@@ -1,12 +1,18 @@
 import java.util.Scanner;
 import java.io.*;
+import javax.swing.*;
+
+
+import java.awt.*;
+import java.awt.event.*;
 
 public class Game {
     public static int numPlayers = 0;
     public static int maxScore = 0;
     public static int maxNumTurns = 0;
-    public static player playerArray[] = new player[4];
+    public static player playerArray[];
     public static Scanner in = new Scanner(System.in);
+    public static JFrame mainFrame = new JFrame("Farkle");
 
     /**
      * Game Constructor
@@ -15,15 +21,7 @@ public class Game {
     public Game() 
     {
         getConfiguration();
-
-        /*numPlayers = 4;
-        maxScore = 10000;
-        maxNumTurns = 10;
-        playerArray = new player[numPlayers];
-        for(int i = 0; i < numPlayers; i++)
-        {
-            playerArray[i] = new player();
-        }*/
+        drawWindow();
     }
 
     public static void main(String[] args)
@@ -167,16 +165,60 @@ public class Game {
      * @returns void
      * @throw no exceptions thrown
      */
-    public void getConfiguration(){
+    public void getConfiguration()
+    {   
+        JFrame setupFrame = new JFrame();
+        JPanel setupPanel = new JPanel();
+        JLabel scoreLabel = new JLabel("Enter Score To Reach: ");
+        JLabel turnLabel = new JLabel("Enter Number Of Turns: ");
+        JLabel playerLabel = new JLabel("Enter Number Of Players: ");
+        JButton play = new JButton("Play");
+        setupPanel.setLayout(new BoxLayout(setupPanel, BoxLayout.Y_AXIS));
+
+        // creates frame
+        setupFrame.setSize(300,200);
+        setupFrame.add(setupPanel);
+        
+        // creates fields
+        JTextField scoreField = new JTextField(7);
+        JTextField turnField = new JTextField(7);
+        JTextField playersField = new JTextField(7);
+
+        // sets fields visible
+        scoreField.setVisible(true);
+        turnField.setVisible(true);
+        playersField.setVisible(true);
+        
+        // inserts the fields and labels
+        setupPanel.add(scoreLabel);
+        setupPanel.add(scoreField);
+        setupPanel.add(turnLabel);
+        setupPanel.add(turnField);
+        setupPanel.add(playerLabel);
+        setupPanel.add(playersField);
+        setupPanel.add(play);
+
+        setupFrame.setVisible(true);
+        
         setMaxScore();
         setNumPlayers();
         setNumTurns();
+        playerArray = new player[numPlayers];
         for(int i = 0; i < numPlayers; i++)
         {
             playerArray[i] = new player();
         }
+        
     }
     
+    private class startGame implements ActionListener 
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            setupFrame.setVisible(false);
+        }
+    }
+
     /*
      * 
      */
@@ -197,4 +239,18 @@ public class Game {
         	return false;
         }
     }
+
+    public static void drawWindow()
+    {
+        mainFrame.setSize(600,600);
+        mainFrame.setVisible(true);
+        mainFrame.setBackground(new Color(51, 153, 0));
+
+        JLabel label1 = new JLabel();
+        label1.setText("Farkle");
+        label1.setFont(new Font("Copperplate", Font.PLAIN, 36));
+        label1.setBackground(new Color(51, 153, 0));
+    }
 }
+
+
