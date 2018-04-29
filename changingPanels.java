@@ -25,12 +25,17 @@ public class changingPanels {
 		
 		JPanel secondPanel = new JPanel();
 		JLabel secondLabel = new JLabel("The second Panel");
+		JButton secondButton = new JButton("Click to change panel");
 		secondPanel.add(secondLabel);
+		secondPanel.add(secondButton);
+		
 		firstPanel.setVisible(true);
 		
 		panelAction action = new panelAction(secondPanel, frame);
 		firstButton.addActionListener(action);
 		
+		panelAction actionBack = new panelAction(firstPanel, frame);
+		secondButton.addActionListener(actionBack);
 	}
 	
 	static private class panelAction implements ActionListener
