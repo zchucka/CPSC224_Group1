@@ -203,15 +203,27 @@ public class mySideStuff {
     	public void actionPerformed(ActionEvent event)
     	{
     		// add score, reset frame, change player
+    		if (playerNumber == 4)
+    		{
+    			playerNumber = 0;
+    		}
     		playerNumber++;
+    		firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
     		JLabel playerLabel = new JLabel("Player " + playerNumber +"'s Turn");
+    		playerLabel.setHorizontalAlignment(JLabel.LEFT);
+    		JLabel currentScore = new JLabel("Round Score = " + " 100");
+    		
+    		
     		firstPanel.removeAll();
-    		firstPanel.add(playerLabel);
+    		firstPanel.add(playerLabel, BorderLayout.NORTH);
+    		firstPanel.add(currentScore);
     		
     		buttPanel.removeAll();
+    		
 			for (int k = 0; k < 6; k++)
 			{
 				JButton helper = new JButton("  " + (k+1) + "  ");
+				helper.addActionListener(new ColorAction(helper, k));
 				buttPanel.add(helper);
 			}
 			
