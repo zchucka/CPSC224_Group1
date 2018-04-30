@@ -20,7 +20,7 @@ public class mySideStuff {
 		frame.setSize(550, 550);
 		frame.setLayout(new GridBagLayout());
 		
-		// making scoreboard
+		// making score board
 		JPanel scoreBoard = new JPanel();
 		scoreBoard.setLayout(new BoxLayout(scoreBoard, BoxLayout.Y_AXIS));
 
