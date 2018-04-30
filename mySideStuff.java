@@ -15,19 +15,33 @@ public class mySideStuff {
 	static int playerNumber = 1;
 	
 	public static void main(String[] args) { 
-		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 500);
+		frame.setSize(550, 550);
 		frame.setLayout(new GridBagLayout());
 		
-		// button panel
+		// making scoreboard
+		JPanel scoreBoard = new JPanel();
+		scoreBoard.setLayout(new BoxLayout(scoreBoard, BoxLayout.Y_AXIS));
+
+		JLabel header = new JLabel("Current Scoreboard");
+		JLabel divider = new JLabel("-----------------------------");
+		scoreBoard.add(header);
+		scoreBoard.add(divider);
+		for (int k = 0; k < 4; k++)
+		{
+			JLabel temp = new JLabel("Player " + (k+1) + ": 2000");
+			scoreBoard.add(temp);
+		}
 		
 		
+		// making player turn label
+		firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
 		JLabel playerLabel = new JLabel("Player " + playerNumber +"'s Turn");
 		playerLabel.setHorizontalAlignment(JLabel.LEFT);
+		JLabel currentScore = new JLabel("Round Score = " + " 100");
 		firstPanel.add(playerLabel, BorderLayout.NORTH);
-		JLabel direction = new JLabel("Select which dice you want to keep");
+		firstPanel.add(currentScore);
 		
 		buttPanel.setLayout(new BoxLayout(buttPanel, BoxLayout.LINE_AXIS));
 		
@@ -42,22 +56,30 @@ public class mySideStuff {
 		JButton play = new JButton("Continue");
 		JButton endTurn = new JButton("End Turn");
 		
+		// making end turn button and keep playing button
 		JPanel playPanel = new JPanel();
 		playPanel.add(play);
 		playPanel.add(endTurn);
 		
+		// making instruction
 		JPanel directionPanel = new JPanel();
+		JLabel direction = new JLabel("Select which dice you want to keep");
 		directionPanel.add(direction);
 		
 		// adding panels
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
+		c.insets = new Insets(0, 0, 125, 0);
 		frame.add(firstPanel, c);
 		
+		c.gridx = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 200, 125, 0);
+		frame.add(scoreBoard, c);
 		
 		c.gridx = 1;
 		c.gridy = 1;
+		c.insets = new Insets(0, 0, 0, 50);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		frame.add(directionPanel, c);
 		
@@ -66,7 +88,7 @@ public class mySideStuff {
 		
 		
 		c.gridy = GridBagConstraints.RELATIVE;
-		c.insets = new Insets(20, 0, 0, 0);
+		c.insets = new Insets(20, 0, 50, 50);
 		frame.add(playPanel, c);
 		
 		// adding listeners
