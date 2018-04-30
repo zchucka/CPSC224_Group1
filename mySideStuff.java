@@ -1,10 +1,8 @@
 import java.awt.*;
 
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.*;
@@ -12,44 +10,44 @@ import java.awt.event.*;
 public class mySideStuff {
 	static Boolean[] array = new Boolean[6];
 	static JPanel buttPanel = new JPanel();
+	static JPanel firstPanel = new JPanel();
+	static JFrame frame = new JFrame("Button Play");
+	static int playerNumber = 1;
 	
 	public static void main(String[] args) { 
-		int number = 1;
-		JFrame frame = new JFrame("Button Play");
+		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500, 500);
 		frame.setLayout(new GridBagLayout());
 		
 		// button panel
-		JPanel firstPanel = new JPanel();
 		
-		JLabel playerLabel = new JLabel("Player One's Turn");
-		firstPanel.add(playerLabel, BorderLayout.PAGE_START);
+		
+		JLabel playerLabel = new JLabel("Player " + playerNumber +"'s Turn");
+		playerLabel.setHorizontalAlignment(JLabel.LEFT);
+		firstPanel.add(playerLabel, BorderLayout.NORTH);
 		JLabel direction = new JLabel("Select which dice you want to keep");
 		
 		buttPanel.setLayout(new BoxLayout(buttPanel, BoxLayout.LINE_AXIS));
 		
-		JButton button1 = new JButton("  " + number +"  ");
-		JButton button2 = new JButton("  2  ");
-		JButton button3 = new JButton("  3  ");
-		JButton button4 = new JButton("  4  ");
-		JButton button5 = new JButton("  5  ");
-		JButton button6 = new JButton("  6  ");
-		JButton play = new JButton("Press me to Continue");
+		// creating the dice
+		for (int k = 0; k < 6; k++)
+		{
+			JButton helper = new JButton("  " + (k+1) + "  ");
+			helper.addActionListener(new ColorAction(helper, k));
+			buttPanel.add(helper);
+		}
+		
+		JButton play = new JButton("Continue");
+		JButton endTurn = new JButton("End Turn");
 		
 		JPanel playPanel = new JPanel();
 		playPanel.add(play);
+		playPanel.add(endTurn);
 		
 		JPanel directionPanel = new JPanel();
 		directionPanel.add(direction);
-		
-		buttPanel.add(button1);
-		buttPanel.add(button2 );
-		buttPanel.add(button3 );
-		buttPanel.add(button4 );
-		buttPanel.add(button5 );
-		buttPanel.add(button6 );
 		
 		// adding panels
 		GridBagConstraints c = new GridBagConstraints();
@@ -68,16 +66,12 @@ public class mySideStuff {
 		
 		
 		c.gridy = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(20, 0, 0, 0);
 		frame.add(playPanel, c);
 		
 		// adding listeners
-		ColorAction action1 = new ColorAction(button1, 0);
-		ColorAction action2 = new ColorAction(button2, 1);
-		ColorAction action3 = new ColorAction(button3, 2);
-		ColorAction action4 = new ColorAction(button4, 3);
-		ColorAction action5 = new ColorAction(button5, 4);
-		ColorAction action6 = new ColorAction(button6, 5);
-		panelAction action7 = new panelAction(buttPanel, frame);
+		panelAction player = new panelAction();
+		endTurnAction endIt = new endTurnAction();
 		
 		/*
 		ColorAction yellowAction = new ColorAction(Color.yellow);
@@ -85,15 +79,11 @@ public class mySideStuff {
         ColorAction redAction = new ColorAction(Color.red); */
 		
 		// associating listeners
-		button1.addActionListener(action1);
-		button2.addActionListener(action2);
-		button3.addActionListener(action3);
-		button4.addActionListener(action4);
-		button5.addActionListener(action5);
-		button6.addActionListener(action6);
-		play.addActionListener(action7);
+		play.addActionListener(player);
+		endTurn.addActionListener(endIt);
 		
 		}
+	
 	
 	/*
      * An action listener that sets the panel's background color.
@@ -128,35 +118,82 @@ public class mySideStuff {
     
     static private class panelAction implements ActionListener
 	{
-		JPanel panelHelper;
-		JFrame frameHelper;
+		int numOfRemove = 0;
+		Boolean[] hasBeenRemoved = new Boolean[6];
 		
-		private panelAction(JPanel panel, JFrame frame) // x and y
+		private panelAction()
 		{
-			panelHelper = panel;
-			frameHelper = frame;
+			resetBool();
+		}
+		
+		private void resetBool()
+		{
+			for (int k = 0; k < 6; k++)
+			{
+				hasBeenRemoved[k] = false;
+			}
+			if (numOfRemove == 6)
+			{
+				for (int k = 0; k < 6; k++)
+				{
+					JButton helper = new JButton("  " + (k+1) + "  ");
+					helper.addActionListener(new ColorAction(helper, k));
+					buttPanel.add(helper);
+				}
+			}
+			frame.setVisible(true);
 		}
 		
 		public void actionPerformed(ActionEvent event)
 		{
-			/*
-			frameHelper.setContentPane(panelHelper);
-			frameHelper.pack();
-			*/
-			int count = 0;
-			while (count < 6)
-			{
-				
-				if (mySideStuff.array[count] == true)
-				{
-					mySideStuff.buttPanel.remove(count);
-				}
-				
-				System.out.println(mySideStuff.array[count]);
-				count++;
-			}
 			
+			for (int k = 0; k < 6; k++)
+			{
+				if (mySideStuff.array[k] == true && hasBeenRemoved[k] == false)
+				{
+					int adjustedNeeded = 0;
+					for (int i = 0; i < k; i++)
+					{
+						if (hasBeenRemoved[i] == true)
+						{
+							adjustedNeeded++;
+						}
+					}
+					mySideStuff.buttPanel.remove(k - adjustedNeeded);
+					hasBeenRemoved[k] = true;
+					numOfRemove++;
+				}
+			}
+			buttPanel.setLayout(new BoxLayout(buttPanel, BoxLayout.LINE_AXIS));
+
+			if (numOfRemove == 6)
+			{
+				resetBool();
+				numOfRemove = 0;
+			}
+			buttPanel.repaint();
 		}
 		
-	}	
+	}
+    
+    static private class endTurnAction implements ActionListener {
+    	
+    	public void actionPerformed(ActionEvent event)
+    	{
+    		// add score, reset frame, change player
+    		playerNumber++;
+    		JLabel playerLabel = new JLabel("Player " + playerNumber +"'s Turn");
+    		firstPanel.removeAll();
+    		firstPanel.add(playerLabel);
+    		
+    		buttPanel.removeAll();
+			for (int k = 0; k < 6; k++)
+			{
+				JButton helper = new JButton("  " + (k+1) + "  ");
+				buttPanel.add(helper);
+			}
+			
+			frame.setVisible(true);
+    	}
+    }
 }
