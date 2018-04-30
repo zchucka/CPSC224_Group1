@@ -342,7 +342,7 @@ public class Game {
         JFrame frame = new JFrame("Button Play");
         int playerNumber = 1;
         */
-
+        System.out.println("in create game");
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(550, 550);
@@ -358,7 +358,7 @@ public class Game {
             scoreBoard.add(divider);
             for (int k = 0; k < 4; k++)
             {
-                JLabel temp = new JLabel("Player " + (k+1) + ": 2000");
+                JLabel temp = new JLabel("Player " + (k+1) + playerArray[k].getScore());
                 scoreBoard.add(temp);
             }
 
@@ -451,6 +451,7 @@ public class Game {
             if (numOfClicks % 2 == 0)
             {
                 newButton.setBackground(Color.BLUE);
+                newButton.setOpaque(true);
                 // set to true
                 array[actionNumber] = true;
             } else {
@@ -527,9 +528,17 @@ public class Game {
 
         public void actionPerformed(ActionEvent event)
         {
-            // add score, reset frame, change player
+            if(playerNumber == numPlayers){
+                playerNumber = 0;
+            }
+
             playerNumber++;
+            // add score, reset frame, change player;
+            firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
             JLabel playerLabel = new JLabel("Player " + playerNumber +"'s Turn");
+            playerLabel.setHorizontalAlignment(JLabel.LEFT);
+
+
             firstPanel.removeAll();
             firstPanel.add(playerLabel);
 
