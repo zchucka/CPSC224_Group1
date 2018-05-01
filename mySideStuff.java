@@ -49,7 +49,6 @@ public class mySideStuff {
 		
 		buttPanel.setLayout(new BoxLayout(buttPanel, BoxLayout.LINE_AXIS));
 		
-		System.out.println(gameHand.numOfDice);
 		gameHand.roll();
 		
 		// creating the dice
@@ -103,6 +102,7 @@ public class mySideStuff {
 		// associating listeners
 		play.addActionListener(player);
 		endTurn.addActionListener(endIt);
+		
 		frame.setVisible(true);
 		}
 	
@@ -154,7 +154,7 @@ public class mySideStuff {
 		{
 			gameHand = new hand(6);
 			gameHand.roll();
-			System.out.println(gameHand.numOfDice);
+
 			for (int k = 0; k < 6; k++)
 			{
 				hasBeenRemoved[k] = false;
@@ -181,7 +181,7 @@ public class mySideStuff {
 			// send hand to score
 			
 			gameHand = new hand(true, gameHand);
-			System.out.println(gameHand.numOfDice);
+
 			gameHand.roll();
 			gameHand.displayRoll();
 			
