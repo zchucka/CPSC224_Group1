@@ -519,7 +519,7 @@ public class Game {
             roundScore = addScore.Score();
             // if (score = -1) don't let them select it
 
-            myHand = new hand(true, myHand);
+            //myHand = new hand(true, myHand);
             myHand.roll();
             scorer aValidityChecker = new scorer(myHand);
             boolean isValid2 = aValidityChecker.checkValidity();
