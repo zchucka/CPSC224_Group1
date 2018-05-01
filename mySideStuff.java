@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import java.awt.event.*;
 
 public class mySideStuff {
-	static Boolean[] array = new Boolean[6];
+	static hand gameHand = new hand(6);
 	static JPanel buttPanel = new JPanel();
 	static JPanel firstPanel = new JPanel();
 	static JFrame frame = new JFrame("Button Play");
@@ -45,10 +45,12 @@ public class mySideStuff {
 		
 		buttPanel.setLayout(new BoxLayout(buttPanel, BoxLayout.LINE_AXIS));
 		
+		gameHand.roll();
+		
 		// creating the dice
 		for (int k = 0; k < 6; k++)
 		{
-			JButton helper = new JButton("  " + (k+1) + "  ");
+			JButton helper = new JButton("  " + gameHand.displayTheDiceValue(k) + "  ");
 			helper.addActionListener(new ColorAction(helper, k));
 			buttPanel.add(helper);
 		}
@@ -120,7 +122,6 @@ public class mySideStuff {
     	{
     		newButton = button;
     		actionNumber = inter;
-    		mySideStuff.array[actionNumber] = false;
     	}
     	public void actionPerformed(ActionEvent event)
     	{
@@ -128,11 +129,11 @@ public class mySideStuff {
     		{
     			newButton.setBackground(Color.BLUE);
     			// set to true
-    			mySideStuff.array[actionNumber] = true;
+    			mySideStuff.gameHand.setRolling(actionNumber, false);
     		} else {
     			newButton.setBackground(null);
     			// set to false
-    			mySideStuff.array[actionNumber] = false;
+    			mySideStuff.gameHand.setRolling(actionNumber, true);
     		}
     		numOfClicks++;
     	}
@@ -152,48 +153,47 @@ public class mySideStuff {
 		{
 			for (int k = 0; k < 6; k++)
 			{
+				gameHand.setRolling(k, true);
 				hasBeenRemoved[k] = false;
 			}
 			if (numOfRemove == 6)
 			{
 				for (int k = 0; k < 6; k++)
 				{
-					JButton helper = new JButton("  " + (k+1) + "  ");
+					JButton helper = new JButton("  " + gameHand.displayTheDiceValue(k) + "  ");
 					helper.addActionListener(new ColorAction(helper, k));
 					buttPanel.add(helper);
 				}
+				gameHand.roll();
 			}
 			frame.setVisible(true);
 		}
 		
 		public void actionPerformed(ActionEvent event)
 		{
-			
+			buttPanel.removeAll();
+			buttPanel.repaint();
+			int count = 0;
 			for (int k = 0; k < 6; k++)
 			{
-				if (mySideStuff.array[k] == true && hasBeenRemoved[k] == false)
+				if(mySideStuff.gameHand.cupOfDice[k].moreRolling() == true)
 				{
-					int adjustedNeeded = 0;
-					for (int i = 0; i < k; i++)
-					{
-						if (hasBeenRemoved[i] == true)
-						{
-							adjustedNeeded++;
-						}
-					}
-					mySideStuff.buttPanel.remove(k - adjustedNeeded);
-					hasBeenRemoved[k] = true;
-					numOfRemove++;
+					JButton helper = new JButton("  " + gameHand.displayTheDiceValue(k) + "  ");
+					helper.addActionListener(new ColorAction(helper, k));
+					buttPanel.add(helper);
+					count++;
 				}
 			}
-			buttPanel.setLayout(new BoxLayout(buttPanel, BoxLayout.LINE_AXIS));
-
+			numOfRemove = 6 - count;
 			if (numOfRemove == 6)
 			{
 				resetBool();
 				numOfRemove = 0;
 			}
+			buttPanel.setLayout(new BoxLayout(buttPanel, BoxLayout.LINE_AXIS));
 			buttPanel.repaint();
+			buttPanel.setVisible(true);
+			frame.setVisible(true);
 		}
 		
 	}
@@ -220,9 +220,14 @@ public class mySideStuff {
     		
     		buttPanel.removeAll();
     		
+    		for (int k = 0; k < 6; k++)
+    		{
+    			gameHand.setRolling(k, true);
+    		}
+    		gameHand.roll();
 			for (int k = 0; k < 6; k++)
 			{
-				JButton helper = new JButton("  " + (k+1) + "  ");
+				JButton helper = new JButton("  " + gameHand.displayTheDiceValue(k) + "  ");
 				helper.addActionListener(new ColorAction(helper, k));
 				buttPanel.add(helper);
 			}
