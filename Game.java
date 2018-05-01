@@ -19,6 +19,8 @@ public class Game {
 
     static JPanel buttPanel = new JPanel();
     static JPanel firstPanel = new JPanel();
+    static JPanel playPanel = new JPanel();
+    static JPanel scoreBoard = new JPanel();
     static int playerNumber = 1;
     static int roundScore = 0;
 
@@ -37,103 +39,6 @@ public class Game {
     public static void main(String[] args)
     {
         Game farkleGame = new Game();
-        //createGamePanel();
-        //mainFrame.setVisible(true);
-        /*
-        int turnNum = 0;
-        boolean isGameComplete = false;
-
-        // loop for the overall game
-        // will run until game is complete
-        while(!isGameComplete)
-        {
-            turnNum++;
-            // for loop to ensure each player
-            // has a turn to roll
-            for (int i = 0; i < numPlayers; i++)
-            {
-                System.out.println("Player " + (i + 1) + "'s turn!");
-
-                boolean isValidHand = true;
-                boolean isTurnOver = false;
-
-                int turnScore = 0;
-                hand myHand = new hand(6);
-
-                // inner loop to run one turn
-                while(isValidHand && !isTurnOver)
-                {
-                    String toScore;
-                    System.out.println("Your turn score is: " + turnScore);
-
-                    myHand.roll();
-                    myHand.displayRoll();
-                    scorer validityChecker = new scorer(myHand);
-                    isValidHand = validityChecker.checkValidity();
-                    scorer addScore = new scorer(myHand);
-
-                    if(isValidHand)
-                    {
-                        boolean isValidSelection = false;
-                        while (!isValidSelection)
-                        {
-                            int rollScore;
-                            System.out.println("Please select the dice you would like to score");
-                            toScore = in.nextLine();
-
-                            for (int k = 0; k < myHand.numOfDice; k++)
-                            {
-                                if(toScore.charAt(k) == 'n')
-                                {
-                                    myHand.setRolling(k, true);
-                                }
-                            }
-
-                            addScore = new scorer(myHand);
-                            rollScore = addScore.Score();
-
-                            if (rollScore >= 0)
-                            {
-                                isValidSelection = true;
-                                turnScore = turnScore + rollScore;
-                            }
-                        }
-
-                        System.out.println("Would you like to end your turn? (y/n)");
-                        String endTurn = in.nextLine();
-
-                        if (endTurn.charAt(0) == 'y')
-                        {
-                            playerArray[i].addPoints(turnScore);
-                            isTurnOver = true;
-                        }
-                        else if ((myHand.numOfDice - addScore.playerHand.numOfDice) == 0)
-                        {
-                            myHand = new hand(6);
-                        }
-                        else
-                        {
-                            myHand = new hand(myHand.numOfDice - addScore.playerHand.numOfDice);
-                        }
-                    }
-                    else
-                    {
-                        System.out.println("Farkle!");
-                        isValidHand = false;
-                    }
-
-                }
-            }
-
-            isGameComplete = checkEndConditions(turnNum);
-            //ScoreBoardPanel finalScores = new ScoreBoardPanel();
-            //mainFrame.setVisible(true);
-            if(isGameComplete){
-            }
-
-        }
-        System.out.println("");
-        */
     }
 
     /**
@@ -197,10 +102,6 @@ public class Game {
         setupPanel.setLayout(new BoxLayout(setupPanel, BoxLayout.Y_AXIS));
         setupPanel.setBackground(VERY_DARK_GREEN);
 
-        // creates frame
-        //setupFrame.setSize(300,200);
-        //setupFrame.add(setupPanel);
-
         // creates fields
         JTextField scoreField = new JTextField(7);
         JTextField turnField = new JTextField(7);
@@ -220,14 +121,8 @@ public class Game {
         setupPanel.add(playersField);
         setupPanel.add(play);
 
-        //setupFrame.setVisible(true);
         mainFrame.setVisible(true);
 
-        //JPanel GamePanel = new JPanel();
-        //JButton finalScores = new JButton("Final Scores");
-        //GamePanel.add(finalScores);
-        //panelAction playAction = new panelAction(GamePanel,500,500);
-        //play.addActionListener(playAction);
         play.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent event){
@@ -259,35 +154,6 @@ public class Game {
                     }
                 }
         );
-        /*
-        finalScores.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                GamePanel.remove(finalScores);
-                if (event.getSource() == finalScores) {
-                    JPanel finalScores = ScoreBoardPanel.createScorePanel();
-                    mainFrame.add(finalScores);
-                    mainFrame.setVisible(true);
-
-                }
-
-            }
-
-        });
-
-        playerArray = new player[numPlayers];
-        for(int i = 0; i < numPlayers; i++)
-        {
-            playerArray[i] = new player();
-        }
-        */
-    }
-
-    private class startGame implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e)
-        {
-            //setupFrame.setVisible(false);
-        }
     }
 
     /*
@@ -311,20 +177,6 @@ public class Game {
         }
     }
 
-    /*
-    public static void drawWindow()
-    {
-        mainFrame.setSize(600,600);
-        mainFrame.setVisible(true);
-        mainFrame.setBackground(new Color(51, 153, 0));
-
-        JLabel label1 = new JLabel();
-        label1.setText("Farkle");
-        label1.setFont(new Font("Copperplate", Font.PLAIN, 36));
-        label1.setBackground(new Color(51, 153, 0));
-    }
-    */
-
     static private class panelAction implements ActionListener
     {
         JPanel panelHelper;
@@ -344,23 +196,14 @@ public class Game {
     }
 
     public static void createGamePanel() {
-        /*
-        Boolean[] array = new Boolean[6];
-        JPanel buttPanel = new JPanel();
-        JPanel firstPanel = new JPanel();
-        JFrame frame = new JFrame("Button Play");
-        int playerNumber = 1;
-        */
         firstPanel.setBackground(VERY_DARK_GREEN);
         buttPanel.setBackground(VERY_DARK_GREEN);
-        mainFrame.setSize(550,550);
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(650, 550);
         mainFrame.setLayout(new GridBagLayout());
 
             // making scoreboard
-            JPanel scoreBoard = new JPanel();
             scoreBoard.setLayout(new BoxLayout(scoreBoard, BoxLayout.Y_AXIS));
 
             JLabel header = new JLabel("Current Scoreboard");
@@ -388,7 +231,7 @@ public class Game {
             myHand.roll();
 
             // creating the dice
-            for (int k = 0; k < 6; k++)
+            for (int k = 0; k < myHand.numOfDice; k++)
             {
                 JButton helper = new JButton("  " + myHand.displayTheDiceValue(k) + "  ");
                 helper.addActionListener(new ColorAction(helper, k));
@@ -399,7 +242,6 @@ public class Game {
             JButton endTurn = new JButton("End Turn");
 
             // making end turn button and keep playing button
-            JPanel playPanel = new JPanel();
             playPanel.setBackground(VERY_DARK_GREEN);
             playPanel.add(play);
             playPanel.add(endTurn);
@@ -442,6 +284,7 @@ public class Game {
             // associating listeners
             play.addActionListener(player);
             endTurn.addActionListener(endIt);
+            mainFrame.setVisible(true);
 
     }
 
@@ -455,7 +298,6 @@ public class Game {
         {
             newButton = button;
             actionNumber = inter;
-            //array[actionNumber] = false;
         }
         public void actionPerformed(ActionEvent event)
         {
@@ -463,13 +305,9 @@ public class Game {
             {
                 newButton.setBackground(Color.BLUE);
                 newButton.setOpaque(true);
-                // set to true
-                //array[actionNumber] = true;
                 myHand.setRolling(actionNumber, false);
             } else {
                 newButton.setBackground(null);
-                // set to false
-                //array[actionNumber] = false;
                 myHand.setRolling(actionNumber, true);
             }
             numOfClicks++;
@@ -479,32 +317,36 @@ public class Game {
 
     static private class panelAction2 implements ActionListener
     {
-        int numOfRemove = 0;
         Boolean[] hasBeenRemoved = new Boolean[6];
 
         private panelAction2()
         {
-            resetBool();
+            for(int k = 0; k < 6; k++ ){
+                hasBeenRemoved[k] = false;
+                myHand.setRolling(k, true);
+            }
         }
 
         private void resetBool()
         {
+            myHand = new hand(6);
+            myHand.roll();
+
             for (int k = 0; k < 6; k++)
             {
-                myHand = new hand(6);
-                myHand.roll();
                 hasBeenRemoved[k] = false;
+                myHand.setRolling(k, true);
             }
-            if (numOfRemove == 6)
+
+            myHand.roll();
+
+            for (int k = 0; k < 6; k++)
             {
-                for (int k = 0; k < 6; k++)
-                {
-                    JButton helper = new JButton("  " + myHand.displayTheDiceValue(k) + "  ");
-                    helper.addActionListener(new ColorAction(helper, k));
-                    buttPanel.add(helper);
-                }
-                myHand.roll();
+                JButton helper = new JButton("  " + myHand.displayTheDiceValue(k) + "  ");
+                helper.addActionListener(new ColorAction(helper, k));
+                buttPanel.add(helper);
             }
+
             mainFrame.setVisible(true);
         }
 
@@ -516,33 +358,42 @@ public class Game {
 
             // send hand to score
             scorer addScore = new scorer(myHand);
-            roundScore = addScore.Score();
+            roundScore = roundScore + addScore.Score();
+            firstPanel.remove(1);
+            firstPanel.add(new JLabel("Round Score = " + roundScore));
+            firstPanel.repaint();
+            mainFrame.setVisible(true);
             // if (score = -1) don't let them select it
 
-            //myHand = new hand(true, myHand);
+            myHand = new hand(true, myHand);
             myHand.roll();
-            scorer aValidityChecker = new scorer(myHand);
-            boolean isValid2 = aValidityChecker.checkValidity();
-            if(isValid2 == false) {
-                System.out.println("not valid");
-            }
-            for (int k = 0; k < 6; k++)
+            for (int i = 0; i < myHand.numOfDice; i++)
             {
-                if (myHand.cupOfDice[k].moreRolling() == true)
-                {
+                myHand.setRolling(i, false);
+            }
+            scorer aValidityChecker = new scorer(myHand);
+            boolean isValidHand = aValidityChecker.checkValidity();
 
-                    JButton helper = new JButton("  "+ myHand.displayTheDiceValue(k) + "  ");
-                    helper.addActionListener(new ColorAction(helper, k));
-                    buttPanel.add(helper);
-                }
+            for (int k = 0; k < myHand.numOfDice; k++)
+            {
+                myHand.setRolling(k,true);
+                JButton helper = new JButton("  "+ myHand.displayTheDiceValue(k) + "  ");
+                helper.addActionListener(new ColorAction(helper, k));
+                buttPanel.add(helper);
             }
-            scorer a2ValidityChecker = new scorer(myHand);
-            boolean isValidHand = a2ValidityChecker.checkValidity();
-            if(isValidHand == false) {
-                System.out.println("not valid");
+
+            if (isValidHand == false && myHand.numOfDice != 0)
+            {
+                buttPanel.removeAll();
+                JLabel farkle = new JLabel("Farkle");
+                buttPanel.add(farkle);
+                roundScore = 0;
+                buttPanel.repaint();
+                buttPanel.setVisible(true);
+                mainFrame.setVisible(true);
+                playPanel.remove(0);
             }
-            // farkle those fucks
-            numOfRemove = 6 - myHand.numOfDice;
+
             if(myHand.numOfDice == 0){
                 resetBool();
             }
@@ -559,6 +410,48 @@ public class Game {
 
         public void actionPerformed(ActionEvent event)
         {
+            Boolean [] helperArray = new Boolean[6];
+            for (int j = 0; j < myHand.numOfDice; j++)
+            {
+                helperArray[j] = true;
+                if (myHand.cupOfDice[j].moreRolling())
+                {
+                    helperArray[j] = false;
+                }
+                myHand.setRolling(j, false);
+            }
+            scorer validChecker = new scorer(myHand);
+
+            boolean isValid = validChecker.checkValidity();
+            if (isValid)
+            {
+                for (int l = 0; l < myHand.numOfDice; l++)
+                {
+                    if (helperArray[l] == false)
+                    {
+                        myHand.setRolling(l, true);
+                    }
+                }
+                validChecker = new scorer(myHand);
+                roundScore = roundScore + validChecker.Score();
+                playerArray[playerNumber - 1].addPoints(roundScore);
+                scoreBoard.removeAll();
+                JLabel header = new JLabel("Current Scoreboard");
+                JLabel divider = new JLabel("-----------------------------");
+                scoreBoard.add(header);
+                scoreBoard.add(divider);
+
+                for (int k = 0; k < numPlayers; k++)
+                {
+                    JLabel temp = new JLabel("Player " + (k+1) + ":    " + playerArray[k].getScore());
+                    scoreBoard.add(temp);
+                }
+                scoreBoard.repaint();
+                mainFrame.setVisible(true);
+            }
+
+            roundScore = 0;
+
             // send hand to scorer and add round score to player
             //roundScore = 0;
             if(playerNumber == numPlayers){
@@ -574,23 +467,62 @@ public class Game {
 
 
             firstPanel.removeAll();
-            firstPanel.add(playerLabel);
+            firstPanel.add(playerLabel, BorderLayout.NORTH);
             firstPanel.add(currentScore);
 
             buttPanel.removeAll();
+            myHand = new hand(6);
+            myHand.roll();
+
+            for (int k = 0; k < myHand.numOfDice; k++)
+            {
+                myHand.setRolling(k, false);
+            }
+            scorer a3ValidityCheck = new scorer(myHand);
+
+            isValid = a3ValidityCheck.checkValidity();
 
             for (int k = 0; k < 6; k++)
             {
                 myHand.setRolling(k, true);
-            }
-            myHand.roll();
-            // check if valid
-            for(int k = 0; k < 6; k++){
-                JButton helper = new JButton("  " + myHand.displayTheDiceValue(k) + "  ");
-                helper.addActionListener(new ColorAction(helper, k));
-                buttPanel.add(helper);
-            }
 
+            }
+            // check if valid
+
+            if (isValid == false) // add that check validity shit
+            {
+                buttPanel.removeAll();
+                JLabel farkle = new JLabel("Get Farked Up");
+                buttPanel.add(farkle);
+                roundScore = 0;
+                buttPanel.repaint();
+                buttPanel.setVisible(true);
+                mainFrame.setVisible(true);
+                playPanel.remove(0);
+            } else {
+                for (int k = 0; k < 6; k++)
+                {
+                    JButton helper = new JButton("  " + myHand.displayTheDiceValue(k) + "  ");
+                    helper.addActionListener(new ColorAction(helper, k));
+                    buttPanel.add(helper);
+                }
+                    playPanel.removeAll();
+
+                    JButton play = new JButton("Continue");
+                    JButton endTurn = new JButton("End Turn");
+
+                    // making end turn button and keep playing button
+                    playPanel.add(play);
+                    playPanel.add(endTurn);
+
+                    panelAction2 player = new panelAction2();
+                    endTurnAction endIt = new endTurnAction();
+
+                    play.addActionListener(player);
+                    endTurn.addActionListener(endIt);
+
+                    playPanel.repaint();
+            }
             mainFrame.setVisible(true);
         }
     }
@@ -618,7 +550,6 @@ public class Game {
                 //hand myHand = new hand(6);
 
                 // inner loop to run one turn
-                System.out.println("in here");
                 while(isValidHand && !isTurnOver)
                 {
                     String toScore;
