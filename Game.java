@@ -21,6 +21,7 @@ public class Game {
     static JPanel firstPanel = new JPanel();
     static JPanel playPanel = new JPanel();
     static JPanel scoreBoard = new JPanel();
+    static JPanel directionPanel = new JPanel();
     static int playerNumber = 1;
     static int roundScore = 0;
     static int roundNumber = 1;
@@ -34,7 +35,6 @@ public class Game {
         mainFrame.setSize(200,200);
         getConfiguration();
         System.out.println("here");
-        createGameLoop(myHand);
     }
 
     public static void main(String[] args)
@@ -248,7 +248,6 @@ public class Game {
             playPanel.add(endTurn);
 
             // making instruction
-            JPanel directionPanel = new JPanel();
             directionPanel.setBackground(VERY_DARK_GREEN);
             JLabel direction = new JLabel("Select which dice you want to keep");
             directionPanel.add(direction);
@@ -359,8 +358,20 @@ public class Game {
 
             if (tempScore == -1)
             {
-                System.out.println("Invalid Input, try again");
+                directionPanel.removeAll();
+                directionPanel.add(new JLabel("Invalid input"));
+                directionPanel.repaint();
+                directionPanel.setVisible(true);
+                mainFrame.setVisible(true);
             } else {
+                directionPanel.removeAll();
+                JLabel direction = new JLabel("Select which dice you want to keep");
+                directionPanel.add(direction);
+                directionPanel.setBackground(VERY_DARK_GREEN);
+                directionPanel.repaint();
+                directionPanel.setVisible(true);
+                mainFrame.setVisible(true);
+
                 buttPanel.removeAll();
                 buttPanel.repaint();
                 roundScore = roundScore + tempScore;
@@ -394,6 +405,8 @@ public class Game {
                     buttPanel.setVisible(true);
                     mainFrame.setVisible(true);
                     playPanel.remove(0);
+                    playPanel.repaint();
+                    playPanel.setVisible(true);
                 }
 
                 if (myHand.numOfDice == 0) {
@@ -413,6 +426,7 @@ public class Game {
 
         public void actionPerformed(ActionEvent event)
         {
+            System.out.println("calling the end turn action listener");
             int tempScore = 0;
             Boolean [] helperArray = new Boolean[6];
             for (int j = 0; j < myHand.numOfDice; j++)
@@ -436,8 +450,20 @@ public class Game {
                 validChecker = new scorer(myHand);
                 tempScore = validChecker.Score();
                 if (tempScore == -1) {
-                    System.out.println("Invalid Input, try again");
+                    directionPanel.removeAll();
+                    directionPanel.add(new JLabel("Invalid input"));
+                    directionPanel.repaint();
+                    directionPanel.setVisible(true);
+                    mainFrame.setVisible(true);
                 } else {
+                    directionPanel.removeAll();
+                    JLabel direction = new JLabel("Select which dice you want to keep");
+                    directionPanel.add(direction);
+                    directionPanel.setBackground(VERY_DARK_GREEN);
+                    directionPanel.repaint();
+                    directionPanel.setVisible(true);
+                    mainFrame.setVisible(true);
+
                     roundScore = roundScore + tempScore;
                     playerArray[playerNumber - 1].addPoints(roundScore);
                     scoreBoard.removeAll();
@@ -453,7 +479,7 @@ public class Game {
                     scoreBoard.repaint();
                     mainFrame.setVisible(true);
                 }
-
+            }
                 if (tempScore >= 0) {
                     roundScore = 0;
                     Boolean endTheGame = false;
@@ -538,105 +564,7 @@ public class Game {
                         }
                         mainFrame.setVisible(true);
                     }
-                }
             }
         }
-    }
-
-
-    public void createGameLoop(hand myHand){
-        int turnNum = 0;
-        boolean isGameComplete = false;
-
-        // loop for the overall game
-        // will run until game is complete
-        while(!isGameComplete)
-        {
-            turnNum++;
-            // for loop to ensure each player
-            // has a turn to roll
-            for (int i = 0; i < numPlayers; i++)
-            {
-                //System.out.println("Player " + (i + 1) + "'s turn!");
-
-                boolean isValidHand = true;
-                boolean isTurnOver = false;
-
-                int turnScore = 0;
-                //hand myHand = new hand(6);
-
-                // inner loop to run one turn
-                while(isValidHand && !isTurnOver)
-                {
-                    String toScore;
-                    System.out.println("Your turn score is: " + turnScore);
-
-                    myHand.roll();
-                    myHand.displayRoll();
-                    scorer validityChecker = new scorer(myHand);
-                    isValidHand = validityChecker.checkValidity();
-                    scorer addScore = new scorer(myHand);
-
-                    if(isValidHand)
-                    {
-                        boolean isValidSelection = false;
-                        while (!isValidSelection)
-                        {
-                            int rollScore;
-                            System.out.println("Please select the dice you would like to score");
-                            toScore = in.nextLine();
-
-                            for (int k = 0; k < myHand.numOfDice; k++)
-                            {
-                                if(toScore.charAt(k) == 'n')
-                                {
-                                    myHand.setRolling(k, true);
-                                }
-                            }
-
-                            addScore = new scorer(myHand);
-                            rollScore = addScore.Score();
-
-                            if (rollScore >= 0)
-                            {
-                                isValidSelection = true;
-                                turnScore = turnScore + rollScore;
-                            }
-                        }
-
-                        System.out.println("Would you like to end your turn? (y/n)");
-                        String endTurn = in.nextLine();
-
-                        if (endTurn.charAt(0) == 'y')
-                        {
-                            playerArray[i].addPoints(turnScore);
-                            isTurnOver = true;
-                        }
-                        else if ((myHand.numOfDice - addScore.playerHand.numOfDice) == 0)
-                        {
-                            myHand = new hand(6);
-                        }
-                        else
-                        {
-                            myHand = new hand(myHand.numOfDice - addScore.playerHand.numOfDice);
-                        }
-                    }
-                    else
-                    {
-                        System.out.println("Farkle!");
-                        isValidHand = false;
-                    }
-
-                }
-            }
-
-            isGameComplete = checkEndConditions(turnNum);
-            //ScoreBoardPanel finalScores = new ScoreBoardPanel();
-            //mainFrame.setVisible(true);
-            if(isGameComplete){
-            }
-
-        }
-        System.out.println("");
     }
 }

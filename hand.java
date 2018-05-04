@@ -3,13 +3,13 @@ public class hand {
 	int numOfRolls = 0;
 	int numOfDice;
 	int numOfSides = 6;
-	
+
 	/*
 	 * creates the hand which contains an array of dice
-	 * also assigns number of dice, sides, and the max number of rolls 
+	 * also assigns number of dice, sides, and the max number of rolls
 	 * @param number of dice
 	 * @returns an object containing an array of dice and two integer values
-	 *          one containing the number of sides allowed and the other containing 
+	 *          one containing the number of sides allowed and the other containing
 	 *          the number of dice
 	 * @throw no exceptions thrown
 	 */
@@ -18,13 +18,13 @@ public class hand {
 		numOfDice = numberOfDice;
 		cupOfDice = new dice[numOfDice];
 	}
-	
-	
+
+
 	/*
 	 * creates the hand object of the given roll values from hand
 	 * @param a hand object
 	 * @returns an object containing an array of dice and two integer values
-	 *          one containing the number of sides allowed and the other containing 
+	 *          one containing the number of sides allowed and the other containing
 	 *          the number of dice
 	 * @throw no exceptions thrown
 	 */
@@ -43,10 +43,10 @@ public class hand {
 
 		numOfDice = count;
 	}
-	
+
 	/*
 	 * rolls the specified dice contained in the array
-	 * @param a string containing y and n and a boolean variable, isDoneRolling, that 
+	 * @param a string containing y and n and a boolean variable, isDoneRolling, that
 	 *        says if the input wants the user to be done rolling
 	 * @returns nothing
 	 * @throw no exceptions thrown
@@ -64,18 +64,18 @@ public class hand {
 				cupOfDice[k] = tempDice.clone();
 			}
 		} else { // takes the input array and rolls the dice that correspond with the 'n' values
-			
+
 			numOfRolls++;
 			for (int k = 0;  k < numOfDice; k++)
 			{
-				if (cupOfDice[k].moreRolling()) 
+				if (cupOfDice[k].moreRolling())
 				{
 					cupOfDice[k].roll();
 				}
 			}
 		}
 	}
-	
+
 	/*
 	 * displays the array of die
 	 * @param none
@@ -103,7 +103,7 @@ public class hand {
 			System.out.println();
 		}
 	}
-	
+
 	/*
 	 * returns the number of rolls allowed
 	 * @param none
@@ -114,7 +114,7 @@ public class hand {
 	{
 		return numOfRolls;
 	}
-	
+
 	/*
 	 * returns the value of the die at the specified index
 	 * @param an index of the die that you want to know its value
@@ -125,7 +125,7 @@ public class hand {
 	{
 		return cupOfDice[index].diceValue();
 	}
-	
+
 	/*
 	 * sorts the die in the roll by numerical order
 	 * @param number of die left to sort
@@ -145,16 +145,16 @@ public class hand {
 				cupOfDice[k+1] = tempDice.clone();
 			}
 		}
-			
+
 		if (numOfUnsorted == 1)
 		{
 			return true;
-		} 
-		
+		}
+
 		return sortTheRoll(numOfUnsorted - 1);
 
 	}
-	
+
 	/*
 	 * resets the number of rolls to zero
 	 * @param none
